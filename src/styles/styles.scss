@@ -13,3 +13,8 @@ $theme-colors: (
 h1 {
     color: map-get($theme-colors, 'primary');
 }
+
+body {
+    background: url('../images/texture.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
