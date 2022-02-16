@@ -38,7 +38,7 @@ module.exports = {
                  *  La liste des loaders est disponible sur le site
                  */
             {
-                test: /\.(jpg|jpeg|gif|png|svg)$/,
+                test: /\.(jpg|jpeg|gif|png)$/,
                 /*use: [
                     {
                     loader: 'file-loader',
@@ -57,7 +57,7 @@ module.exports = {
                  *  et /resource (fichier créé dans le dossier indiqué)
                  *  On peut aussi régler la taille limite qui décidera de l'un ou l'autre au lieu de celle
                  *  par défaut :
-                 *              test: /\.(jpg|jpeg|gif|png|svg)$/,
+                 *              test: /\.(jpg|jpeg|gif|png)$/,
                  *              type: 'asset',
                                 parser: {
                                   dataUrlCondition: {
@@ -84,6 +84,32 @@ module.exports = {
                                     }
                                 }
                  */
+            },
+
+            {
+                test: /\.(woff(2)?|ttf|eot|svg)$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'fonts/[name][ext]'
+                }
+                /** Ici, au moment de l'installation on le fait dans les dependencies (pas les dev-dependencies
+                 *  car on en aura besoin en prod)
+                 *  npm install @fontawesome/fontawesome-free --save
+                */
+            },
+
+            {
+                test: /\.js$/,
+                exclude: /node_modules/, // Car il ne faut surtout pas transpiler ces fichiers de dépendances
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['@babel/preset-env']
+                        }
+                    }
+                ]
+                // En CLI npm install babel-loader @babel/core @babel/preset-env --save-dev
             }
         ]
     }
