@@ -1,11 +1,18 @@
-const path = require('path')
+const path = require('path');
+const htmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry: "./src/index.js",
     output: {
-        filename: "js/site.js",
+        filename: "js/site-[contenthash].js",
         path: path.resolve(__dirname, 'dist'),
-        assetModuleFilename: 'images/[name][ext]' // Pour gérer le nommage et la structure depuis la v5
+        assetModuleFilename: 'images/[name]-[contenthash].[ext]', // Pour gérer le nommage et la structure depuis la v5
+        clean: true /** Pour nettoyer le dist avant chaque build et ne pas laisser s'accumuler les fichiers non utilisés 
+                     *  dans la version courante de l'application (à chaque modification d'un fichier suivi d'un build,
+                     *  un nouveau hash est généré pour celui-ci)
+                     *  Dans la version 4 de webpack, il fallait installer un plugin particulier : clean-webpack-plugin
+                     *  qui n'est d'ailleurs pas un plugin officiel (mais très populaire)
+                     */
     },
 
     /*mode: 'development',
@@ -90,7 +97,7 @@ module.exports = {
                 test: /\.(woff(2)?|ttf|eot|svg)$/,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'fonts/[name][ext]'
+                    filename: 'fonts/[name]-[contenthash].[ext]'
                 }
                 /** Ici, au moment de l'installation on le fait dans les dependencies (pas les dev-dependencies
                  *  car on en aura besoin en prod)
@@ -112,6 +119,12 @@ module.exports = {
                 // En CLI npm install babel-loader @babel/core @babel/preset-env --save-dev
             }
         ]
-    }
+    },
+
+    plugins: [
+        new htmlWebpackPlugin({
+            template: 'src/templates/index.html'
+        })
+    ]
     
 }
