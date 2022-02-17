@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "node_modules/.bin/webpack --mode production",
-    "watch": "node_modules/.bin/webpack --watch --mode development",
+    "prod": "node_modules/.bin/webpack --config webpack.prod.js",
+    "dev": "node_modules/.bin/webpack-dev-server --config webpack.dev.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -23,7 +23,9 @@
     "sass-loader": "^12.4.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.68.0",
-    "webpack-cli": "^4.9.2"
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4",
+    "webpack-merge": "^5.8.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.0.0",

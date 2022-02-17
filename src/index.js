@@ -4,7 +4,7 @@ import 'bootstrap'
 // Si on veut simplement utiliser le css
 import './styles/styles.scss'
 
-const version = '5'
+const version = '5.68.0'
 
 $('#title').html(`Hello from Webpack ${version}`);
 
