@@ -51,6 +51,17 @@ module.exports = merge( common, {
                 }),
             new terserJsPlugin({ parallel: true })
         ],
+        splitChunks: {
+            cacheGroups: {
+              vendor: {
+                test: /node_modules/,
+                chunks: 'all',
+                name: 'vendor',
+                enforce: true
+              },
+            }
+          },
+        
       },
     plugins: [
         new miniCssExtractPlugin({

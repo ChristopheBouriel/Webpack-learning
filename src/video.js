@@ -1,4 +1,4 @@
-import 'bootstrap'
+import 'bootstrap/scss/bootstrap.scss'
 import './styles/styles.scss'
 import videojs from 'video.js'
 import tram from './medias/tram.mp4'

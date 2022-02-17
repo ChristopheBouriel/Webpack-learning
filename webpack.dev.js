@@ -64,7 +64,21 @@ module.exports = merge( common, {
                 }, { loader: "sass-loader", options: { sourceMap: true } }]
             },
         ]
-    }
+    },
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+            cacheGroups: {
+              vendor: {
+                test: /node_modules/,
+                chunks: 'initial',
+                name: 'vendor',
+                enforce: true
+              },
+            }
+          },
+        
+      },
 })
 
 /** Il faut donc aussi modifier les scripts dans le package.json

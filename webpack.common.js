@@ -147,7 +147,7 @@ module.exports = {
             template: 'src/templates/video.html',
             filename: 'video.html',
             title: 'The video',
-            chunks: ['video']
+            chunks: ['video'],
         })
     ]
     
