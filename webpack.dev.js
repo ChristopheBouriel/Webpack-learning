@@ -2,6 +2,7 @@ const { merge } = require('webpack-merge');
 const common = require('./webpack.common');
 const path = require('path');
 
+
 module.exports = merge( common, {
     mode: "development",
     //watch: true, --> plus utile car par défaut watch est à true quand on utilise le dev-server
@@ -10,6 +11,7 @@ module.exports = merge( common, {
         },
         --> Déplacé dans l'objet de configuration du dev-server
      */
+    devtool: "source-map",
     devServer: {
         port: 3030, // On spécifie le port
         open: true, /**  Ouvre automatiquement un onglet dans le navigateur par défaut, mais on peut en indiquer un autre :
@@ -43,6 +45,25 @@ module.exports = merge( common, {
                      */
         //liveReload: false,
         //https: true,
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.(css|scss)$/,
+                use: ['style-loader', { loader: "css-loader", options: { sourceMap: true } }, {
+                    loader: 'postcss-loader',
+                    options: {
+                        postcssOptions: {
+                            plugins: [
+                                require('autoprefixer')()
+                            ]
+                        },
+                        sourceMap: true
+                    }
+                }, { loader: "sass-loader", options: { sourceMap: true } }]
+            },
+        ]
     }
 })
 

@@ -1,10 +1,13 @@
 const path = require('path');
-const htmlWebpackPlugin = require('html-webpack-plugin')
+const htmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: "./src/index.js",
+    entry: {
+        'index': "./src/index.js",
+        'video': "./src/video.js"
+    },
     output: {
-        filename: "js/site-[contenthash].js",
+        filename: "js/[name]-[contenthash].js",
         path: path.resolve(__dirname, 'dist'),
         assetModuleFilename: 'images/[name]-[contenthash].[ext]', // Pour gérer le nommage et la structure depuis la v5
         clean: true /** Pour nettoyer le dist avant chaque build et ne pas laisser s'accumuler les fichiers non utilisés 
@@ -25,6 +28,13 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.mp4$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'medias/[name]-[contenthash].[ext]'
+                } 
+            },
+            /*{
                 test: /\.(css|scss)$/,
                 use: ['style-loader', 'css-loader', {
                     loader: 'postcss-loader',
@@ -39,6 +49,10 @@ module.exports = {
                     }
                 }, 'sass-loader'] // il y a un ordre : on utilise d'abord sass, puis css et enfin style
             },
+
+            Tout ce qui précède a été déplacé dans webpack.dev.js et webpack.prod.js afin de paramétrer
+            différemment en fonction du mode dev ou prod
+
             /** Webpack ne connait que le JS, donc s'il doit traiter un autre type de fichier
                  *  il faut utiliser le loader correspondant et lui indiquer :
                  *  "Si tu vois une extension .css ou .scss, alors utilise le sass-loader le css-loader et le style-loader"
@@ -123,7 +137,17 @@ module.exports = {
 
     plugins: [
         new htmlWebpackPlugin({
-            template: 'src/templates/index.html'
+            template: 'src/templates/index.html',
+            filename: 'index.html',
+            title: 'Welcome',
+            chunks: ['index'] /** On indique un chunk particulier pour que les feuilles de style ne soient toutes
+                                * injectées dans chaque page/chunk, même s'ils ne sont pas concernés */
+        }),
+        new htmlWebpackPlugin({
+            template: 'src/templates/video.html',
+            filename: 'video.html',
+            title: 'The video',
+            chunks: ['video']
         })
     ]
     
